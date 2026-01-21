@@ -26,7 +26,16 @@ export default defineConfigWithVueTs(
     },
     rules: {
       eqeqeq: ['error', 'smart'],
-      '@typescript-eslint/no-unused-vars': 'error',
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        {
+          args: 'all',
+          argsIgnorePattern: '^_',
+          varsIgnorePattern: '^_',
+          caughtErrors: 'all',
+          caughtErrorsIgnorePattern: '^_'
+        }
+      ],
       '@typescript-eslint/no-use-before-define': 'error',
       '@typescript-eslint/no-explicit-any': 'off',
       'prettier/prettier': ['error', { endOfLine: 'auto' }],
