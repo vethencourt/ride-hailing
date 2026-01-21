@@ -1,23 +1,77 @@
-import { globalIgnores } from 'eslint/config'
-import { defineConfigWithVueTs, vueTsConfigs } from '@vue/eslint-config-typescript'
-import pluginVue from 'eslint-plugin-vue'
 import skipFormatting from '@vue/eslint-config-prettier/skip-formatting'
-
-// To allow more languages other than `ts` in `.vue` files, uncomment the following lines:
-// import { configureVueProject } from '@vue/eslint-config-typescript'
-// configureVueProject({ scriptLangs: ['ts', 'tsx'] })
-// More info at https://github.com/vuejs/eslint-config-typescript/#advanced-setup
+import { defineConfigWithVueTs, vueTsConfigs } from '@vue/eslint-config-typescript'
+import { globalIgnores } from 'eslint/config'
+import importPlugin from 'eslint-plugin-import'
+import vuePlugin from 'eslint-plugin-vue'
 
 export default defineConfigWithVueTs(
   {
     name: 'app/files-to-lint',
-    files: ['**/*.{vue,ts,mts,tsx}'],
+    files: ['**/*.{vue,ts,mts,tsx}']
   },
 
   globalIgnores(['**/dist/**', '**/dist-ssr/**', '**/coverage/**']),
 
-  ...pluginVue.configs['flat/essential'],
+  ...vuePlugin.configs['flat/essential'],
   vueTsConfigs.recommended,
 
-  skipFormatting,
+  {
+    name: 'ride-hailing/custom-rules',
+    plugins: { import: importPlugin },
+    settings: {
+      'import/resolver': {
+        typescript: { alwaysTryTypes: true },
+        node: true
+      }
+    },
+    rules: {
+      eqeqeq: ['error', 'smart'],
+      '@typescript-eslint/no-unused-vars': 'error',
+      '@typescript-eslint/no-use-before-define': 'error',
+      '@typescript-eslint/no-explicit-any': 'off',
+      'prettier/prettier': ['error', { endOfLine: 'auto' }],
+      'import/extensions': ['error', { extensions: ['.js', '.jsx', '.ts', '.tsx'] }],
+      'import/named': 'off',
+      'import/no-unresolved': 'error',
+      'import/no-extraneous-dependencies': [
+        'error',
+        { devDependencies: true, bundledDependencies: ['globals'] }
+      ],
+      'import/order': [
+        2,
+        {
+          'newlines-between': 'always',
+          alphabetize: {
+            order: 'asc',
+            orderImportKind: 'asc',
+            caseInsensitive: true
+          },
+          distinctGroup: false,
+          groups: [
+            'builtin',
+            'external',
+            'type',
+            'internal',
+            ['parent', 'sibling', 'index'],
+            'object'
+          ],
+          pathGroups: [
+            {
+              pattern: 'vue',
+              group: 'external',
+              position: 'before'
+            },
+            {
+              pattern: 'quasar/**',
+              group: 'external',
+              position: 'after'
+            }
+          ],
+          pathGroupsExcludedImportTypes: ['vue']
+        }
+      ]
+    }
+  },
+
+  skipFormatting
 )
