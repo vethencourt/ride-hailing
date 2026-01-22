@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@quasar/extras": "^1.17.0",
+    "axios": "^1.13.2",
     "date-fns": "^4.1.0",
     "pinia": "^3.0.4",
     "quasar": "^2.18.6",
