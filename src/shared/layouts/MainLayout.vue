@@ -1,6 +1,7 @@
 <template>
-  <q-layout view="hHh LpR fFf">
-    <q-header class="bg-primary">
+  <!-- TODO: refactor header and footer -->
+  <q-layout view="hhh lpr fFf">
+    <q-header class="bg-primary" elevated>
       <q-toolbar>
         <q-toolbar-title>
           <q-avatar>
@@ -18,10 +19,23 @@
 
     <q-footer class="bg-secondary">
       <q-toolbar>
-        <q-toolbar-title class="flex justify-end">
+        <q-toolbar-title class="text-subtitle2 flex justify-end">
           <small>Ricardo Vethencourt 2026</small>
         </q-toolbar-title>
       </q-toolbar>
     </q-footer>
   </q-layout>
 </template>
+
+<style lang="scss">
+  .q-page {
+    width: 100%;
+    padding: 32px;
+
+    h6 {
+      text-align: center;
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+  }
+</style>
