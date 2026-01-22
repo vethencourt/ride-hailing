@@ -1,7 +1,7 @@
 import { format, parseISO } from 'date-fns'
 import { es } from 'date-fns/locale'
 
-export const formatDate = (date: string, pattern = 'dd/MM/yyyy') => {
+export const formatDate = (date: string, pattern = 'dd/MM/yyyy'): string => {
   if (!date) return 'N/A'
 
   try {
