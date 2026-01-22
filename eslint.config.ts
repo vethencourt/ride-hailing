@@ -20,7 +20,10 @@ export default defineConfigWithVueTs(
     plugins: { import: importPlugin },
     settings: {
       'import/resolver': {
-        typescript: { alwaysTryTypes: true },
+        typescript: {
+          project: './tsconfig.app.json',
+          alwaysTryTypes: true
+        },
         node: true
       }
     },
