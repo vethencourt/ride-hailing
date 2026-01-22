@@ -1,6 +1,6 @@
 <template>
   <q-layout view="hHh LpR fFf">
-    <q-header class="bg-primary text-white">
+    <q-header class="bg-primary">
       <q-toolbar>
         <q-toolbar-title>
           <q-avatar>
@@ -16,7 +16,7 @@
       <router-view />
     </q-page-container>
 
-    <q-footer class="bg-grey-8 text-white">
+    <q-footer class="bg-secondary">
       <q-toolbar>
         <q-toolbar-title class="flex justify-end">
           <small>Ricardo Vethencourt 2026</small>
