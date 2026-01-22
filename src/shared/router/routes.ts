@@ -1,20 +1,28 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
+import { VEHICLE_LIST, VEHICLE_CREATE, AUTH_LOGIN, AUTH_SIGNUP } from '../constants/routes'
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
+      redirect: '/fleet'
+    },
+    {
+      path: '/fleet',
       component: () => import('../layouts/DashboardLayout.vue'),
       children: [
         {
           path: '',
-          // component: () => import('../modules/vehicles/components/VehiclesList.vue')
+          name: VEHICLE_LIST,
+          // component: () => import('../vehicles/components/VehiclesList.vue')
           component: { template: '<div>Vehicle List</div>' }
         },
         {
           path: 'create',
-          // component: () => import('../modules/vehicles/components/CreateVehicle.vue')
+          name: VEHICLE_CREATE,
+          // component: () => import('../vehicles/components/CreateVehicle.vue')
           component: { template: '<div>Vehicle Form</div>' }
         }
       ]
@@ -23,8 +31,18 @@ const router = createRouter({
       path: '/',
       component: () => import('../layouts/AuthLayout.vue'),
       children: [
-        // { path: 'login', component: () => import('../modules/auth/components/login.vue') },
-        // { path: 'signup', component: () => import('../modules/auth/components/signup.vue') }
+        {
+          path: 'login',
+          name: AUTH_LOGIN,
+          // component: () => import('../auth/components/login.vue')
+          component: { template: '<div><login/div>' }
+        },
+        {
+          path: 'signup',
+          name: AUTH_SIGNUP,
+          // component: () => import('../auth/components/signup.vue')
+          component: { template: '<div>signup</div>' }
+        }
       ]
     },
     {
