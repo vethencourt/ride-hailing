@@ -13,6 +13,9 @@ const app = createApp(App)
 
 app.use(createPinia())
 app.use(router)
-app.use(Quasar, { plugins: {} })
+app.use(Quasar, {
+  plugins: {},
+  config: { dark: true }
+})
 
 app.mount('#app')

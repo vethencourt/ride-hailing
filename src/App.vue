@@ -4,4 +4,8 @@ import { RouterView } from 'vue-router'
 
 <template><RouterView /></template>
 
-<style scoped></style>
+<style lang="sass">
+body.body--dark,
+.q-layout__section--marginal
+  color: $dark-text
+</style>
