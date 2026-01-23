@@ -18,7 +18,7 @@ import HeaderComponent from '@/shared/components/HeaderComponent.vue'
 <style lang="scss">
 .q-page {
   width: 100%;
-  padding: 32px;
+  padding: 4px 32px;
 
   h6 {
     text-align: center;

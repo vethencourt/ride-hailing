@@ -1,5 +1,4 @@
-<script setup lang="ts">
-</script>
+<script setup lang="ts"></script>
 
 <template>
   <q-header class="bg-primary" elevated>
@@ -15,5 +14,7 @@
 </template>
 
 <style scoped lang="scss">
-
+.q-layout__section--marginal {
+  color: $dark-text;
+}
 </style>
