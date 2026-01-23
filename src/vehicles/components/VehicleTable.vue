@@ -9,6 +9,7 @@ import { ITEMS_PER_PAGE } from '@/shared/constants/numbers'
 import { useVehicleStore } from '@/vehicles/store'
 
 import StatusSelect from './StatusSelect.vue'
+import { getStatusText } from '../utils'
 
 // define a prop to receive the search term
 const props = defineProps<{
@@ -34,8 +35,17 @@ const columns = computed<QTableProps['columns']>(() => [
   { name: 'createdAt', label: 'Creado el', field: 'createdAt' },
   { name: 'modifiedBy', label: 'Modificado', field: 'updatedBy.email', align: 'center' },
   { name: 'modifiedAt', label: 'Modificado el', field: 'modifiedAt' },
-  { name: 'status', label: 'Estado', field: 'status', align: 'center' }
+  {
+    name: 'status',
+    label: 'Estado',
+    field: 'statusText',
+    align: 'center'
+  }
 ])
+
+const rows = computed(() =>
+  vehicles.value.map((v: Vehicle) => ({ ...v, statusText: getStatusText(v.status) }))
+)
 
 onMounted(() => store.getVehicles())
 </script>
@@ -44,11 +54,12 @@ onMounted(() => store.getVehicles())
   <div class="table-wrap">
     <q-table
       class="bg-dark"
-      :rows="vehicles"
-      :columns="columns"
+      :rows
+      :columns
       :visible-columns="visibleColumns"
       :filter="props.filter"
       :pagination="{ page: 1, rowsPerPage: ITEMS_PER_PAGE }"
+      :rows-per-page-options="[5, 10, 25, 50, 100]"
       row-key="id"
       separator="horizontal"
       no-data-label="No se encontaron vehiculos"
