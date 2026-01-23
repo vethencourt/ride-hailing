@@ -4,13 +4,8 @@ import type { VehicleStatus } from '../types'
 import BadgeComponent from '@/shared/components/BadgeComponent.vue'
 import { VEHICLE_STATUSES } from '@/shared/constants/statusNames'
 
-const props = defineProps<{
-  value: VehicleStatus
-}>()
-
-const emit = defineEmits<{
-  onStatusChange: [value: VehicleStatus]
-}>()
+const props = defineProps<{ value: VehicleStatus }>()
+const emit = defineEmits<{ onStatusChange: [value: VehicleStatus] }>()
 </script>
 
 <template>
@@ -36,5 +31,9 @@ const emit = defineEmits<{
 <style lang="scss">
 .q-select .q-field__append {
   padding-left: 4px;
+}
+
+.q-field__native {
+  justify-content: end;
 }
 </style>

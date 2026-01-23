@@ -4,7 +4,7 @@ import { ref } from 'vue'
 import { DEBOUNCE_DELAY } from '@/shared/constants/numbers'
 import { VEHICLE_CREATE } from '@/shared/constants/routeNames'
 
-import VehicleList from '../components/VehicleList.vue'
+import VehicleTable from '../components/VehicleTable.vue'
 
 const searchTerm = ref('')
 </script>
@@ -30,7 +30,7 @@ const searchTerm = ref('')
         />
       </div>
     </div>
-    <vehicle-list />
+    <vehicle-table :filter="searchTerm" />
     <!-- <q-page-sticky class="fab-button" position="bottom-right">
       <q-btn
         icon="add"
@@ -50,7 +50,8 @@ const searchTerm = ref('')
   align-items: center;
   width: 75%;
   margin: auto;
-  margin-bottom: 1rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 
 .fab-button {

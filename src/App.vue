@@ -18,4 +18,8 @@ h5,
 h6 {
   margin: 0;
 }
+
+.notify-dark-text {
+  color: $dark !important;
+}
 </style>
