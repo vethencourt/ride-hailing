@@ -5,10 +5,11 @@ export interface Vehicle {
   make: string
   model: string
   year: number
-  status: VehicleStatus
   createdAt: string
   updatedAt: string
+  createdBy: User
   updatedBy: User
+  status: VehicleStatus
 }
 
 export type VehicleStatus = 'AVAILABLE' | 'MAINTENANCE' | 'SERVICING'

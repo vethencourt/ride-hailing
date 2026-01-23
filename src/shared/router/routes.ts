@@ -16,7 +16,7 @@ const router = createRouter({
         {
           path: 'fleet',
           name: VEHICLE_LIST,
-          component: () => import('@/vehicles/components/VehicleList.vue')
+          component: () => import('@/vehicles/pages/VehiclesPage.vue')
         },
         {
           path: 'fleet/create',

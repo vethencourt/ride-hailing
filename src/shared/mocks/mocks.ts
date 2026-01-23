@@ -15,7 +15,8 @@ export const VEHICLES: Vehicle[] = [
     status: 'AVAILABLE',
     createdAt: '0',
     updatedAt: '0',
-    updatedBy: USER
+    updatedBy: USER,
+    createdBy: USER,
   },
   {
     id: '1',
@@ -25,7 +26,8 @@ export const VEHICLES: Vehicle[] = [
     status: 'SERVICING',
     createdAt: '0',
     updatedAt: '0',
-    updatedBy: USER
+    updatedBy: USER,
+    createdBy: USER,
   },
   {
     id: '2',
@@ -35,6 +37,7 @@ export const VEHICLES: Vehicle[] = [
     status: 'MAINTENANCE',
     createdAt: '0',
     updatedAt: '0',
-    updatedBy: USER
+    updatedBy: USER,
+    createdBy: USER,
   }
 ]

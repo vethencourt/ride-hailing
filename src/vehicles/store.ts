@@ -1,7 +1,7 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 
-import type { Vehicle } from './types'
+import type { Vehicle, VehicleStatus } from './types'
 
 import { fetchVehicles } from './service'
 
@@ -24,11 +24,17 @@ export const useVehicleStore = defineStore('vehicles', () => {
     loading.value = false
   }
 
+  async function changeVehicleStatus(id: string, status: VehicleStatus) {
+    const vehicle = vehicles.value.find((v) => v.id === id)
+    if (vehicle) vehicle.status = status
+  }
+
   return {
     vehicles,
     loading,
     error,
     getVehicles,
+    changeVehicleStatus,
     getVehicle,
     getVehicleCount
   }
