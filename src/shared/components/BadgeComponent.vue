@@ -1,23 +1,34 @@
 <script setup lang="ts">
 import type { VehicleStatus } from '@/vehicles/types'
 
-const props = defineProps<{
+defineProps<{
   status: VehicleStatus
   clickable?: boolean
 }>()
-
-const { status } = props
 
 const emits = defineEmits<{
   (e: 'click'): void
 }>()
 
-function statusClass(s: VehicleStatus) {
+function statusClass(s: VehicleStatus): string {
   return s === 'AVAILABLE'
     ? 'status-available'
     : s === 'MAINTENANCE'
       ? 'status-maintenance'
       : 'status-servicing'
+}
+
+function statusText(s: VehicleStatus): string {
+  switch (s) {
+    case 'AVAILABLE':
+      return 'disponible'
+    case 'MAINTENANCE':
+      return 'mantenimiento'
+    case 'SERVICING':
+      return 'servicio'
+    default:
+      return ''
+  }
 }
 </script>
 
@@ -27,7 +38,7 @@ function statusClass(s: VehicleStatus) {
     :class="[statusClass(status), { 'cursor-pointer': clickable }]"
     @click="() => emits('click')"
   >
-    {{ status.toLowerCase() }}
+    {{ statusText(status) }}
   </q-badge>
 </template>
 
@@ -36,7 +47,7 @@ function statusClass(s: VehicleStatus) {
   padding: 0.5em 1em;
   font-size: 0.75rem;
   font-weight: 600;
-  color: black;
+  color: $dark;
 
   &.status-available {
     background-color: $positive;

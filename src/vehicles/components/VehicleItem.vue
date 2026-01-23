@@ -9,7 +9,7 @@ import StatusSelect from '@/vehicles/components/StatusSelect.vue'
 import { useVehicleStore } from '@/vehicles/store'
 
 const props = defineProps<{ vehicle: Vehicle }>()
-const { id, make, model, year, createdBy, status } = props.vehicle
+const { id, make, model, year, createdBy } = props.vehicle
 const store = useVehicleStore()
 
 const debouncedStatusChange = debounce((id: string, status: VehicleStatus) => {
@@ -28,7 +28,7 @@ function handleStatusChange(newStatus: VehicleStatus) {
       <q-item-label caption>{{ createdBy.email }}</q-item-label>
     </q-item-section>
     <q-item-section side>
-      <StatusSelect :value="status" @onStatusChange="handleStatusChange" />
+      <StatusSelect :value="props.vehicle.status" @onStatusChange="handleStatusChange" />
     </q-item-section>
   </q-item>
 </template>

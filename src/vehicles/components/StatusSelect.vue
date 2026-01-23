@@ -4,7 +4,7 @@ import type { VehicleStatus } from '../types'
 import BadgeComponent from '@/shared/components/BadgeComponent.vue'
 import { VEHICLE_STATUSES } from '@/shared/constants/statusNames'
 
-defineProps<{
+const props = defineProps<{
   value: VehicleStatus
 }>()
 
@@ -15,13 +15,13 @@ const emit = defineEmits<{
 
 <template>
   <q-select
-    :model-value="value"
+    :model-value="props.value"
     @update:model-value="(val) => emit('onStatusChange', val)"
     :options="VEHICLE_STATUSES"
     borderless
   >
     <template v-slot:selected>
-      <badge-component v-if="value" :status="value" />
+      <badge-component v-if="props.value" :status="props.value" />
     </template>
     <template v-slot:option="scope">
       <q-item v-bind="scope.itemProps">
