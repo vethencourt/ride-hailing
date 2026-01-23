@@ -35,6 +35,6 @@ const emit = defineEmits<{
 
 <style lang="scss">
 .q-select .q-field__append {
-  padding-left: 8px;
+  padding-left: 4px;
 }
 </style>

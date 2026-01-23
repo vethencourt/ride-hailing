@@ -2,13 +2,13 @@ import type { User } from '@/auth/types'
 import type { Vehicle } from '@/vehicles/types'
 
 export const USER: User = {
-  id: '0',
+  id: '',
   email: 'name@email.com'
 }
 
 export const VEHICLES: Vehicle[] = [
   {
-    id: '0',
+    id: '',
     make: 'Toyota',
     model: 'Yaris',
     year: 2020,
@@ -16,10 +16,10 @@ export const VEHICLES: Vehicle[] = [
     createdAt: '0',
     updatedAt: '0',
     updatedBy: USER,
-    createdBy: USER,
+    createdBy: USER
   },
   {
-    id: '1',
+    id: '',
     make: 'Volkswagen',
     model: 'Golf',
     year: 2018,
@@ -27,10 +27,10 @@ export const VEHICLES: Vehicle[] = [
     createdAt: '0',
     updatedAt: '0',
     updatedBy: USER,
-    createdBy: USER,
+    createdBy: USER
   },
   {
-    id: '2',
+    id: '',
     make: 'Ford',
     model: 'Mustang',
     year: 1967,
@@ -38,6 +38,39 @@ export const VEHICLES: Vehicle[] = [
     createdAt: '0',
     updatedAt: '0',
     updatedBy: USER,
-    createdBy: USER,
+    createdBy: USER
+  },
+  {
+    id: '',
+    make: 'Toyota',
+    model: 'Yaris',
+    year: 2020,
+    status: 'AVAILABLE',
+    createdAt: '0',
+    updatedAt: '0',
+    updatedBy: USER,
+    createdBy: USER
+  },
+  {
+    id: '',
+    make: 'Volkswagen',
+    model: 'Golf',
+    year: 2018,
+    status: 'SERVICING',
+    createdAt: '0',
+    updatedAt: '0',
+    updatedBy: USER,
+    createdBy: USER
+  },
+  {
+    id: '',
+    make: 'Ford',
+    model: 'Mustang',
+    year: 1967,
+    status: 'MAINTENANCE',
+    createdAt: '0',
+    updatedAt: '0',
+    updatedBy: USER,
+    createdBy: USER
   }
 ]

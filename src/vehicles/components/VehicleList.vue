@@ -12,7 +12,7 @@ onMounted(() => store.getVehicles())
 </script>
 
 <template>
-  <q-list separator>
+  <q-list class="bg-secondary" separator>
     <template v-for="vehicle in vehicles" :key="vehicle.id">
       <VehicleItem :vehicle="vehicle" />
     </template>
@@ -22,6 +22,7 @@ onMounted(() => store.getVehicles())
 <style lang="scss" scoped>
 .q-list {
   width: 75%;
+  height: 100%;
   margin: auto;
 }
 </style>
