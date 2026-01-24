@@ -48,7 +48,6 @@ async function handleSubmit() {
 <style lang="scss" scoped>
 .q-form {
   gap: 0.5rem;
-  width: 50%;
   margin: auto;
 }
 </style>
