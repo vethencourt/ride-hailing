@@ -6,11 +6,9 @@ import HeaderComponent from '@/shared/components/HeaderComponent.vue'
 <template>
   <q-layout view="hhh lpr fFf">
     <HeaderComponent />
-
     <q-page-container>
       <router-view />
     </q-page-container>
-
     <FooterComponent />
   </q-layout>
 </template>
@@ -19,11 +17,19 @@ import HeaderComponent from '@/shared/components/HeaderComponent.vue'
 .q-page {
   width: 100%;
   padding: 4px 32px;
+}
 
-  h6 {
-    text-align: center;
-    margin-top: 0;
-    margin-bottom: 0;
+@media (min-width: $breakpoint-md-min) {
+  .q-page {
+    width: 75%;
+    margin: auto;
+  }
+}
+
+@media (max-width: $breakpoint-sm-max) {
+  .q-page {
+    width: 100% !important;
+    padding: 4px;
   }
 }
 </style>

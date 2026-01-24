@@ -11,32 +11,36 @@ const searchTerm = ref('')
 
 <template>
   <q-page>
-    <div class="header-container">
-      <h5 class="text-center">Vehículos</h5>
-      <div class="row items-center">
-        <q-input
-          class="q-mr-md"
-          placeholder="Buscar"
-          v-model="searchTerm"
-          :debounce="DEBOUNCE_DELAY"
-          dense
-          standout
-        />
-        <q-btn
-          class="small-btn"
-          color="primary"
-          :to="{ name: `${VEHICLE_CREATE}` }"
-          label="Crear"
-        />
+    <div class="header-container row">
+      <div class="col-md-6 col-sm-12">
+        <h5>Vehículos</h5>
+      </div>
+      <div class="col-md-6 col-sm-12">
+        <div class="row">
+          <q-input
+            class="q-mr-md"
+            placeholder="Buscar"
+            v-model="searchTerm"
+            :debounce="DEBOUNCE_DELAY"
+            standout
+            dense
+          />
+          <q-btn
+            class="small-btn"
+            color="primary"
+            label="Crear"
+            :to="{ name: `${VEHICLE_CREATE}` }"
+          />
+        </div>
       </div>
     </div>
     <vehicle-table :filter="searchTerm" />
-    <!-- <q-page-sticky class="fab-button" position="bottom-right">
+    <!-- <q-page-sticky class='fab-button' position='bottom-right'>
       <q-btn
-        icon="add"
-        color="primary"
-        text-color="accent"
-        :to="{ name: `${VEHICLE_CREATE}` }"
+        icon='add'
+        color='primary'
+        text-color='accent'
+        :to='{ name: `${VEHICLE_CREATE}` }'
         fab
       />
     </q-page-sticky> -->
@@ -45,17 +49,20 @@ const searchTerm = ref('')
 
 <style lang="scss" scoped>
 .header-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 75%;
-  margin: auto;
+  width: 100%;
+  // display: flex;
+  // justify-content: space-between;
+  // align-items: center;
+  // margin: auto;
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
-}
 
-.fab-button {
-  right: 10%;
-  bottom: 10%;
+  & > div {
+    height: 40px;
+  }
 }
+// .fab-button {
+//   right: 10%;
+//   bottom: 10%;
+// }
 </style>

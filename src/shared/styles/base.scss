@@ -1,0 +1,34 @@
+// import quasar sass variables
+@import '@/quasar-variables.sass';
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+}
+
+body {
+  &.body--dark,
+  &.q-layout__section--marginal {
+    color: $dark-text;
+  }
+
+  .q-page {
+    width: 85%;
+    margin: auto;
+  }
+
+  .q-footer {
+    @media (max-width: $breakpoint-sm-max) {
+      position: static !important;
+      margin-top: auto;
+    }
+  }
+
+  .notify-dark-text {
+    color: $dark !important;
+  }
+}

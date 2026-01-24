@@ -13,8 +13,4 @@
   </q-header>
 </template>
 
-<style scoped lang="scss">
-.q-layout__section--marginal {
-  color: $dark-text;
-}
-</style>
+<style scoped lang="scss"></style>
