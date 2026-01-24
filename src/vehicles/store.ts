@@ -2,16 +2,18 @@ import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import { Notify } from 'quasar'
 
-import type { Vehicle, VehicleStatus } from './types'
+import type { CreateVehicle, Vehicle, VehicleStatus } from './types'
 
 import { NOTIFY_TIME } from '@/shared/constants/numbers'
+import { USER } from '@/shared/mocks/mocks'
 import { formatDate } from '@/shared/utils/date'
 
 import { fetchVehicles } from './service'
 
 export const useVehicleStore = defineStore('vehicles', () => {
   const vehicles = ref<Vehicle[]>([])
-  const loading = ref(false)
+  const isLoading = ref(false)
+  const isStatusLoading = ref(false)
   const error = ref<string | null>(null)
 
   const getVehicle = computed(
@@ -22,7 +24,7 @@ export const useVehicleStore = defineStore('vehicles', () => {
   const getVehicleCount = computed((): number => vehicles.value.length)
 
   async function getVehicles() {
-    loading.value = true
+    isLoading.value = true
     const response = await fetchVehicles()
 
     vehicles.value = response.map((v) => {
@@ -33,24 +35,51 @@ export const useVehicleStore = defineStore('vehicles', () => {
       }
     })
 
-    loading.value = false
+    isLoading.value = false
+  }
+
+  async function createVehicle(vehicleForm: CreateVehicle) {
+    isLoading.value = true
+    setTimeout(() => {
+      const vehicle: Vehicle = {
+        ...vehicleForm,
+        id: crypto.randomUUID(),
+        createdAt: formatDate(new Date().toISOString()),
+        updatedAt: formatDate(new Date().toISOString()),
+        createdBy: USER,
+        updatedBy: USER
+      }
+      vehicles.value.push(vehicle)
+      isLoading.value = false
+    }, 2500)
   }
 
   async function changeVehicleStatus(id: string, status: VehicleStatus) {
-    const vehicle = vehicles.value.find((v) => v.id === id)
-    if (vehicle) {
-      vehicle.status = status
-      const { make, model, year } = vehicle
-      const message = `Estado de ${make} ${model} ${year} actualizado`
-      Notify.create({ type: 'positive', message, timeout: NOTIFY_TIME, classes: 'notify-dark-text' })
-    }
+    isStatusLoading.value = true
+    setTimeout(() => {
+      const vehicle = vehicles.value.find((v) => v.id === id)
+      if (vehicle) {
+        vehicle.status = status
+        const { make, model, year } = vehicle
+        const message = `Estado de ${make} ${model} ${year} actualizado`
+        Notify.create({
+          type: 'positive',
+          message,
+          timeout: NOTIFY_TIME,
+          classes: 'notify-dark-text'
+        })
+      }
+      isStatusLoading.value = false
+    }, 2500)
   }
 
   return {
     vehicles,
-    loading,
+    isLoading,
+    isStatusLoading,
     error,
     getVehicles,
+    createVehicle,
     changeVehicleStatus,
     getVehicle,
     getVehicleCount

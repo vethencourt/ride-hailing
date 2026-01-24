@@ -4,7 +4,7 @@ export interface Vehicle {
   id: string
   make: string
   model: string
-  year: number
+  year: number | null
   createdAt: string
   updatedAt: string
   createdBy: User
@@ -14,4 +14,7 @@ export interface Vehicle {
 
 export type VehicleStatus = 'AVAILABLE' | 'MAINTENANCE' | 'SERVICING'
 
-export type CreateVehicle = Omit<Vehicle, 'id' | 'createdAt' | 'updatedAt' | 'updatedBy'>
+export type CreateVehicle = Omit<
+  Vehicle,
+  'id' | 'createdAt' | 'updatedAt' | 'createdBy' | 'updatedBy'
+>

@@ -10,8 +10,8 @@ const router = createRouter({
       component: () => import('../layouts/MainLayout.vue'),
       children: [
         {
-          path: '', // Matches "/" exactly
-          redirect: '/fleet' // Send to /fleet
+          path: '',
+          redirect: '/fleet'
         },
         {
           path: 'fleet',
@@ -21,8 +21,7 @@ const router = createRouter({
         {
           path: 'fleet/create',
           name: VEHICLE_CREATE,
-          // component: () => import(''@/vehicles/components/VehicleForm.vue'')
-          component: { template: '<div>Vehicle Form</div>' }
+          component: () => import('@/vehicles/pages/VehicleCreatePage.vue')
         }
       ]
     },
