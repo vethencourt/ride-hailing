@@ -41,7 +41,7 @@ export default defineConfigWithVueTs(
       ],
       '@typescript-eslint/no-use-before-define': 'error',
       '@typescript-eslint/no-explicit-any': 'off',
-      'prettier/prettier': ['error', { endOfLine: 'auto' }],
+      'prettier/prettier': ['error', { singleQuote: true, endOfLine: 'auto' }],
       'import/extensions': ['error', { extensions: ['.js', '.jsx', '.ts', '.tsx'] }],
       'import/named': 'off',
       'import/no-unresolved': 'error',

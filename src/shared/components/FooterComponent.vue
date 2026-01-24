@@ -1,5 +1,4 @@
-<script setup lang="ts">
-</script>
+<script setup lang="ts"></script>
 
 <template>
   <q-footer class="bg-secondary">
@@ -11,5 +10,4 @@
   </q-footer>
 </template>
 
-<style scoped lang="scss">
-</style>
+<style scoped lang="scss"></style>
