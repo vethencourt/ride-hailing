@@ -56,5 +56,3 @@ function handleButtonClick() {
   </div>
   <VehicleFormModal v-model="isModalOpen" />
 </template>
-
-<style lang="scss" scoped></style>

@@ -13,5 +13,3 @@ const searchTerm = ref<string>('')
     <vehicle-table :filter="searchTerm" />
   </q-page>
 </template>
-
-<style lang="scss" scoped></style>

@@ -12,5 +12,3 @@ const router = useRouter()
     flat
   />
 </template>
-
-<style lang="scss" scoped></style>

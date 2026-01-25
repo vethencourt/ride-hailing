@@ -32,7 +32,7 @@ function handleCancel() {
   else emit('cancel')
 }
 
-async function handleSubmit() {
+function handleSubmit() {
   store.createVehicle(form.value)
   handleCancel()
 }
@@ -85,10 +85,3 @@ async function handleSubmit() {
     </div>
   </q-form>
 </template>
-
-<style lang="scss" scoped>
-.q-form {
-  gap: 0.25rem;
-  margin: auto;
-}
-</style>

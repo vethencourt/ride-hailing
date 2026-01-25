@@ -1,4 +1,3 @@
-// import quasar sass variables
 @import '@/quasar-variables.sass';
 
 h1,
@@ -10,14 +9,19 @@ h6 {
   margin: 0;
 }
 
+.q-layout__section--marginal,
+.q-header,
+.q-footer,
+.q-field--standout.q-field--dark.q-field--highlighted .q-field__native {
+  color: $dark-text !important;
+}
+
 body {
-  &.body--dark,
-  &.q-layout__section--marginal {
-    color: $dark-text;
+  &.body--dark {
+    color: $dark-text !important;
   }
 
   .q-page {
-    width: 85%;
     margin: auto;
   }
 
@@ -26,6 +30,11 @@ body {
       position: static !important;
       margin-top: auto;
     }
+  }
+
+  .q-form {
+    gap: 0.25rem;
+    margin: auto;
   }
 
   .notify-dark-text {
