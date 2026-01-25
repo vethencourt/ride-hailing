@@ -14,8 +14,23 @@
 .q-page-container {
   height: 100vh;
 
-  .q-card {
-    width: 25%;
+  @media (min-width: $breakpoint-md-min) {
+    .q-card {
+      width: 25%;
+    }
+  }
+
+  @media (min-width: $breakpoint-sm-min) {
+    .q-card {
+      width: 75%;
+    }
+  }
+
+  @media (max-width: $breakpoint-xs-max) {
+    padding: 0.5rem;
+    .q-card {
+      width: 100%;
+    }
   }
 }
 </style>
