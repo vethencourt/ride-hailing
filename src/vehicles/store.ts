@@ -52,7 +52,14 @@ export const useVehicleStore = defineStore('vehicles', () => {
         status
       }
       vehicles.value.push(vehicle)
+
       isLoading.value = false
+      Notify.create({
+        type: 'positive',
+        message: `Vehículo creado`,
+        timeout: NOTIFY_TIME,
+        classes: 'notify-dark-text'
+      })
     }, 2500)
   }
 
@@ -60,16 +67,20 @@ export const useVehicleStore = defineStore('vehicles', () => {
     isStatusLoading.value = true
     setTimeout(() => {
       const vehicle = vehicles.value.find((v) => v.id === id)
+
       if (vehicle) {
         vehicle.status = status
         const { make, model, year } = vehicle
-        const message = `Estado de ${make} ${model} ${year} actualizado`
+        isStatusLoading.value = false
+
         Notify.create({
           type: 'positive',
-          message,
+          message: `Estado de ${make} ${model} ${year} actualizado`,
           timeout: NOTIFY_TIME,
           classes: 'notify-dark-text'
         })
+
+        return
       }
       isStatusLoading.value = false
     }, 2500)

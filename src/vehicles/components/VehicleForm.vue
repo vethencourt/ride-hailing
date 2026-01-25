@@ -13,6 +13,10 @@ import { useVehicleStore } from '@/vehicles/store'
 
 import { getStatusText } from '../utils'
 
+const emit = defineEmits<{
+  cancel: []
+}>()
+
 const store = useVehicleStore()
 const router = useRouter()
 const q = useQuasar()
@@ -23,14 +27,14 @@ const form = ref<CreateVehicle>({
   status: null
 })
 
-async function handleSubmit() {
-  await store.createVehicle(form.value)
-  router.push({ name: VEHICLE_LIST })
-}
-
 function handleCancel() {
   if (q.screen.xs) router.push({ name: VEHICLE_LIST })
-  // else close modal
+  else emit('cancel')
+}
+
+async function handleSubmit() {
+  store.createVehicle(form.value)
+  handleCancel()
 }
 </script>
 
@@ -76,8 +80,8 @@ function handleCancel() {
       </template>
     </q-select>
     <div class="row justify-center q-gutter-md">
-      <q-btn type="submit" label="Crear" color="positive" />
-      <q-btn label="Cancelar" color="negative" @click="handleCancel" />
+      <q-btn type="submit" label="Crear" color="primary" />
+      <q-btn label="Cancelar" color="accent" @click="handleCancel" outline />
     </div>
   </q-form>
 </template>
