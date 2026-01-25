@@ -19,7 +19,7 @@ const debouncedStatusChange = debounce((id: string, status: VehicleStatus) => {
 function handleStatusChange(newStatus: VehicleStatus) {
   debouncedStatusChange(id, newStatus)
 }
-//TODO: Change qitem to an expandable to show more vehicle details0
+//TODO: Change qitem to an expandable to show more vehicle details
 //TODO: either delete this component or create a list view for desktop with it
 </script>
 

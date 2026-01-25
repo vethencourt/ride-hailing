@@ -29,6 +29,12 @@ import HeaderComponent from '@/shared/components/HeaderComponent.vue'
 @media (max-width: $breakpoint-md-max) {
   .q-page {
     width: 100% !important;
+    padding: 16px;
+  }
+}
+
+@media (max-width: $breakpoint-sm-max) {
+  .q-page {
     padding: 4px;
   }
 }

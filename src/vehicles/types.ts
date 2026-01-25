@@ -16,5 +16,5 @@ export type VehicleStatus = 'AVAILABLE' | 'MAINTENANCE' | 'SERVICING'
 
 export type CreateVehicle = Omit<
   Vehicle,
-  'id' | 'createdAt' | 'updatedAt' | 'createdBy' | 'updatedBy'
->
+  'id' | 'createdAt' | 'updatedAt' | 'createdBy' | 'updatedBy' | 'status'
+> & { status: VehicleStatus | null }

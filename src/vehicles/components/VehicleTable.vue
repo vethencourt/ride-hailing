@@ -116,7 +116,7 @@ onMounted(() => store.getVehicles())
       </q-td>
     </template>
     <template v-slot:no-data="{ message }">
-      <div class="full-width row flex-center q-gutter-sm q-pa-lg text-gray">
+      <div class="full-width row flex-center q-gutter-sm q-pa-lg muted-text">
         <span> {{ message }} </span>
       </div>
     </template>

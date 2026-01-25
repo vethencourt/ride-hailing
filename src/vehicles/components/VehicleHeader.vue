@@ -1,24 +1,28 @@
 <script setup lang="ts">
+import { ref } from 'vue'
 import { useQuasar } from 'quasar'
 import { useRouter } from 'vue-router'
 
 import { DEBOUNCE_DELAY } from '@/shared/constants/numbers'
 import { VEHICLE_CREATE } from '@/shared/constants/routeNames'
 
+import VehicleFormModal from './VehicleFormModal.vue'
+
 const props = defineProps<{
-  modelValue: string // Changed from searchTerm to modelValue
+  modelValue: string
 }>()
 
 const emits = defineEmits<{
-  (e: 'update:modelValue', value: string): void // Changed event name
+  (e: 'update:modelValue', value: string): void
 }>()
 
 const router = useRouter()
 const q = useQuasar()
+const isModalOpen = ref(false)
 
 function handleButtonClick() {
   if (q.screen.xs) router.push({ name: `${VEHICLE_CREATE}` })
-  //else open modal
+  else isModalOpen.value = true
 }
 </script>
 
@@ -45,12 +49,12 @@ function handleButtonClick() {
           color="primary"
           :label="q.screen.xs ? undefined : 'Crear'"
           :icon="q.screen.xs ? 'add' : undefined"
-          :to="{ name: `${VEHICLE_CREATE}` }"
           @click="handleButtonClick"
         />
       </div>
     </div>
   </div>
+  <VehicleFormModal v-model="isModalOpen" />
 </template>
 
 <style lang="scss" scoped></style>

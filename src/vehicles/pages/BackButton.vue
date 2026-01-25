@@ -5,7 +5,7 @@ const router = useRouter()
 
 <template>
   <q-btn
-    class="back-button"
+    class="back-button q-pa-none"
     icon="keyboard_arrow_left"
     text-color="dark-text"
     @click="router.back()"
