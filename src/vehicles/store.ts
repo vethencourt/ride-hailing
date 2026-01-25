@@ -41,13 +41,15 @@ export const useVehicleStore = defineStore('vehicles', () => {
   async function createVehicle(vehicleForm: CreateVehicle) {
     isLoading.value = true
     setTimeout(() => {
+      const status = vehicleForm.status as VehicleStatus
       const vehicle: Vehicle = {
         ...vehicleForm,
         id: crypto.randomUUID(),
         createdAt: formatDate(new Date().toISOString()),
         updatedAt: formatDate(new Date().toISOString()),
         createdBy: USER,
-        updatedBy: USER
+        updatedBy: USER,
+        status
       }
       vehicles.value.push(vehicle)
       isLoading.value = false

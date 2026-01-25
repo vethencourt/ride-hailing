@@ -45,7 +45,6 @@ function handleButtonClick() {
           color="primary"
           :label="q.screen.xs ? undefined : 'Crear'"
           :icon="q.screen.xs ? 'add' : undefined"
-          :to="{ name: `${VEHICLE_CREATE}` }"
           @click="handleButtonClick"
         />
       </div>
