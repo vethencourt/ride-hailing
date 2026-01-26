@@ -1,14 +1,14 @@
 <script setup lang="ts">
+import BackButton from '@/shared/components/BackButton.vue'
 import VehicleForm from '@/vehicles/components/VehicleForm.vue'
 
-import BackButton from './BackButton.vue'
 import { CREATE_TITLE } from '../constants'
 </script>
 
 <template>
   <q-page>
     <div class="header-container">
-      <back-button />
+      <back-button text-color="dark-text" />
       <h5>{{ CREATE_TITLE }}</h5>
     </div>
     <VehicleForm />
