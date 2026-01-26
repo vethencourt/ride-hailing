@@ -19,7 +19,7 @@ function handleLogout() {
     <q-toolbar>
       <q-toolbar-title>
         <q-avatar>
-          <img src="/logo.png" />
+          <q-img src="/logo.png" />
         </q-avatar>
         Ride Hailing
       </q-toolbar-title>

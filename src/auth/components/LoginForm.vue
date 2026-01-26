@@ -29,6 +29,7 @@ function handleLogin() {
       v-model="form.email"
       bg-color="secondary"
       :rules="[checkRequired, checkEmail]"
+      lazy-rules
       standout
       dense
     />
