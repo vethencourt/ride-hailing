@@ -2,10 +2,9 @@
 import { onMounted, computed } from 'vue'
 import { storeToRefs } from 'pinia'
 
-import type { Vehicle } from '../types'
+import type { Vehicle, VehicleListRequest } from '../types'
 import type { QTableProps } from 'quasar'
 
-import { ITEMS_PER_PAGE } from '@/shared/constants/numbers'
 import { useVehicleStore } from '@/vehicles/store'
 
 import StatusSelect from './StatusSelect.vue'
@@ -17,7 +16,8 @@ const props = defineProps<{
 }>()
 
 const store = useVehicleStore()
-const { vehicles } = storeToRefs(store)
+// TODO: use isLoading
+const { vehicles, /*isLoading,*/ pagination } = storeToRefs(store)
 
 const visibleColumns = ['make', 'model', 'year', 'createdBy', 'modifiedBy', 'status']
 const columns = computed<QTableProps['columns']>(() => [
@@ -70,21 +70,46 @@ const rows = computed(() =>
   vehicles.value.map((v: Vehicle) => ({ ...v, statusText: getStatusText(v.status) }))
 )
 
-onMounted(() => store.getVehicles())
+async function handleRequest(requestProps: any) {
+  const { page, rowsPerPage, sortBy, descending } = requestProps.pagination
+  pagination.value.sortBy = sortBy
+  pagination.value.descending = descending
+
+  const requestBody: VehicleListRequest = {
+    pagination: {
+      page: page || 1,
+      pageSize: rowsPerPage || 10
+    },
+    searchTerm: props.filter,
+    sortBy: sortBy || 'createdAt',
+    sortOrder: descending ? '-1' : '1'
+  }
+
+  await store.getVehicles(requestBody)
+}
+
+onMounted(() => {
+  handleRequest({
+    pagination: pagination.value,
+    filter: props.filter
+  })
+})
 </script>
 
 <template>
   <q-table
     class="bg-dark"
+    separator="horizontal"
+    row-key="id"
+    no-data-label="No se encontaron vehiculos"
     :rows
     :columns
     :visible-columns="visibleColumns"
     :filter="props.filter"
-    :pagination="{ page: 1, rowsPerPage: ITEMS_PER_PAGE }"
+    :pagination
     :rows-per-page-options="[5, 10, 25, 50, 100]"
-    row-key="id"
-    separator="horizontal"
-    no-data-label="No se encontaron vehiculos"
+    @request="handleRequest"
+    binary-state-sort
     flat
   >
     <template v-slot:body-cell-createdBy="props">

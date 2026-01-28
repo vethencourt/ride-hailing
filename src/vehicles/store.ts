@@ -1,89 +1,98 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
-import { Notify } from 'quasar'
 
-import type { CreateVehicle, Vehicle, VehicleStatus } from './types'
+import type { CreateVehicle, Vehicle, VehicleListRequest, VehicleStatus } from './types'
 
-import { NOTIFY_TIME } from '@/shared/constants/numbers'
-import { USER } from '@/shared/mocks/mocks'
+import { ITEMS_PER_PAGE } from '@/shared/constants/numbers'
 import { formatDate } from '@/shared/utils/date'
 
-import { fetchVehicles } from './service'
+import {
+  fetchVehicles,
+  createVehicle as createVehicleService,
+  updateVehicle as updateVehicleService
+} from './service'
 
 export const useVehicleStore = defineStore('vehicles', () => {
   const vehicles = ref<Vehicle[]>([])
   const isLoading = ref(false)
   const isStatusLoading = ref(false)
   const error = ref<string | null>(null)
+  const pagination = ref({
+    page: 1,
+    rowsPerPage: ITEMS_PER_PAGE,
+    rowsNumber: 0,
+    sortBy: 'createdAt',
+    descending: true
+  })
 
-  const getVehicle = computed(
-    () =>
-      (id: string): Vehicle | undefined =>
-        vehicles.value.find((v) => v.id === id)
-  )
   const getVehicleCount = computed((): number => vehicles.value.length)
 
-  async function getVehicles() {
+  async function getVehicles(body: VehicleListRequest) {
     isLoading.value = true
-    const response = await fetchVehicles()
 
-    vehicles.value = response.map((v) => {
-      return {
-        ...v,
-        createdAt: formatDate(v.createdAt),
-        updatedAt: formatDate(v.updatedAt)
-      }
-    })
+    try {
+      const response = await fetchVehicles(body)
+      const { pagination: pResponse, vehicles: vResponse } = response
 
-    isLoading.value = false
+      pagination.value.rowsNumber = pResponse.totalItems
+      pagination.value.page = pResponse.currentPage
+      pagination.value.rowsPerPage = pResponse.pageSize
+
+      vehicles.value = vResponse.map((v) => {
+        return {
+          ...v,
+          createdAt: formatDate(v.createdAt),
+          updatedAt: formatDate(v.updatedAt)
+        }
+      })
+    } catch (err: any) {
+      error.value = err.response?.data?.message
+      throw err
+    } finally {
+      isLoading.value = false
+    }
   }
 
   async function createVehicle(vehicleForm: CreateVehicle) {
     isLoading.value = true
-    setTimeout(() => {
-      const status = vehicleForm.status as VehicleStatus
-      const vehicle: Vehicle = {
-        ...vehicleForm,
-        id: crypto.randomUUID(),
-        createdAt: formatDate(new Date().toISOString()),
-        updatedAt: formatDate(new Date().toISOString()),
-        createdBy: USER,
-        updatedBy: USER,
-        status
-      }
-      vehicles.value.push(vehicle)
+    error.value = null
 
+    try {
+      const response = await createVehicleService(vehicleForm)
+      const newVehicle: Vehicle = {
+        ...response,
+        createdBy: formatDate(response.createdAt),
+        updatedAt: formatDate(response.updatedAt)
+      }
+      vehicles.value.unshift(newVehicle)
+    } catch (err: any) {
+      error.value = err.response?.data?.message
+      throw err
+    } finally {
       isLoading.value = false
-      Notify.create({
-        type: 'positive',
-        message: `Vehículo creado`,
-        timeout: NOTIFY_TIME,
-        classes: 'notify-dark-text'
-      })
-    }, 2500)
+    }
   }
 
   async function changeVehicleStatus(id: string, status: VehicleStatus) {
     isStatusLoading.value = true
-    setTimeout(() => {
-      const vehicle = vehicles.value.find((v) => v.id === id)
+    error.value = null
 
-      if (vehicle) {
-        vehicle.status = status
-        const { make, model, year } = vehicle
-        isStatusLoading.value = false
-
-        Notify.create({
-          type: 'positive',
-          message: `Estado de ${make} ${model} ${year} actualizado`,
-          timeout: NOTIFY_TIME,
-          classes: 'notify-dark-text'
-        })
-
-        return
+    try {
+      const updated = await updateVehicleService({ status }, id)
+      const formatted: Vehicle = {
+        ...updated,
+        createdAt: formatDate(updated.createdAt),
+        updatedAt: formatDate(updated.updatedAt)
       }
+      const i = vehicles.value.findIndex((v: Vehicle) => v.id === id)
+      if (i !== -1) vehicles.value[i] = formatted
+      else vehicles.value.unshift(formatted)
+    } catch (err: any) {
+      error.value = err.response?.data?.message
+      throw err
+    } finally {
       isStatusLoading.value = false
-    }, 2500)
+    }
   }
 
   return {
@@ -91,10 +100,10 @@ export const useVehicleStore = defineStore('vehicles', () => {
     isLoading,
     isStatusLoading,
     error,
+    pagination,
     getVehicles,
     createVehicle,
     changeVehicleStatus,
-    getVehicle,
     getVehicleCount
   }
 })

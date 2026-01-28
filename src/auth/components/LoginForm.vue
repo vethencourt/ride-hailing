@@ -5,6 +5,7 @@ import { useRouter } from 'vue-router'
 
 import type { LoginCredentials } from '../types'
 
+import { NOTIFY_TIME } from '@/shared/constants/numbers'
 import { AUTH_SIGNUP, VEHICLE_LIST } from '@/shared/constants/routeNames'
 import { checkRequired, checkEmail } from '@/shared/utils/form'
 
@@ -24,14 +25,16 @@ async function handleLogin() {
 
     q.notify({
       type: 'positive',
-      message: 'Bienvenido a Ride Hailing'
+      message: 'Bienvenido a Ride Hailing',
+      timeout: NOTIFY_TIME
     })
 
     router.push({ name: VEHICLE_LIST })
   } catch (_) {
     q.notify({
       type: 'negative',
-      message: 'Error al iniciar sesión'
+      message: 'Error al iniciar sesión',
+      timeout: NOTIFY_TIME
     })
   }
 }

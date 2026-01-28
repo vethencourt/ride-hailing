@@ -1,9 +1,21 @@
-import type { Vehicle } from './types'
+import type { CreateVehicle, Vehicle, VehicleListRequest, VehicleListResponse } from './types'
 
-import { VEHICLES } from '@/shared/mocks/mocks'
+import api from '@/shared/services/api'
 
-// TODO: el try va aqui
-// TODO: user el tipo ApiResponse aqui
-export function fetchVehicles(): Promise<Vehicle[]> {
-  return Promise.resolve(VEHICLES)
+export async function fetchVehicles(body: VehicleListRequest): Promise<VehicleListResponse> {
+  const response = await api.post<VehicleListResponse>('/vehicles', body)
+  return response as unknown as VehicleListResponse
+}
+
+export async function createVehicle(vehicle: CreateVehicle): Promise<any> {
+  const response = await api.post<any>('/vehicles/create', vehicle)
+  return response as any
+}
+
+export async function updateVehicle(
+  vehicle: Partial<CreateVehicle>,
+  id: string
+): Promise<Vehicle> {
+  const response = await api.post<Vehicle>(`/vehicles/${id}`, vehicle)
+  return response as unknown as Vehicle
 }
