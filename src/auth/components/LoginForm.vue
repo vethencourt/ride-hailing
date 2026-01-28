@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useQuasar } from 'quasar'
 import { useRouter } from 'vue-router'
 
 import type { LoginCredentials } from '../types'
@@ -11,14 +12,28 @@ import { useAuthStore } from '../store'
 
 const store = useAuthStore()
 const router = useRouter()
+const q = useQuasar()
 const form = ref<LoginCredentials>({
   email: '',
   password: ''
 })
 
-function handleLogin() {
-  store.login(form.value)
-  router.push({ name: VEHICLE_LIST })
+async function handleLogin() {
+  try {
+    await store.login(form.value)
+
+    q.notify({
+      type: 'positive',
+      message: 'Bienvenido a Ride Hailing'
+    })
+
+    router.push({ name: VEHICLE_LIST })
+  } catch (_) {
+    q.notify({
+      type: 'negative',
+      message: 'Error al iniciar sesión'
+    })
+  }
 }
 </script>
 
@@ -26,8 +41,9 @@ function handleLogin() {
   <q-form class="column" @submit="handleLogin">
     <q-input
       placeholder="Correo"
-      v-model="form.email"
       bg-color="secondary"
+      v-model="form.email"
+      :disable="store.loading"
       :rules="[checkRequired, checkEmail]"
       lazy-rules
       standout
@@ -36,17 +52,19 @@ function handleLogin() {
     <q-input
       type="password"
       placeholder="Contraseña"
-      v-model="form.password"
       bg-color="secondary"
+      v-model="form.password"
+      :disable="store.loading"
       :rules="[checkRequired]"
       standout
       dense
     />
     <div class="row justify-center q-gutter-md">
-      <q-btn type="submit" label="Ingresar" color="primary" />
+      <q-btn type="submit" label="Ingresar" color="primary" :loading="store.loading" />
       <q-btn
         label="Registro"
         color="secondary"
+        :disable="store.loading"
         @click="router.push({ name: AUTH_SIGNUP })"
         outline
       />

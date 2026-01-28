@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
+import { useAuthStore } from '@/auth/store'
+
 import { VEHICLE_LIST, VEHICLE_CREATE, AUTH_LOGIN, AUTH_SIGNUP } from '../constants/routeNames'
 
 const router = createRouter({
@@ -46,6 +48,19 @@ const router = createRouter({
       component: () => import('../components/NotFound.vue')
     }
   ]
+})
+
+router.beforeEach(async (to, _, next) => {
+  const authStore = useAuthStore()
+  const isPublicRoute = [AUTH_LOGIN, AUTH_SIGNUP].includes(to.name as string)
+
+  if (!isPublicRoute && !authStore.isAuthenticated) {
+    next({ name: AUTH_LOGIN })
+  } else if (isPublicRoute && authStore.isAuthenticated) {
+    next({ name: VEHICLE_LIST })
+  } else {
+    next()
+  }
 })
 
 export default router

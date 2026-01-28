@@ -1,8 +1,11 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useQuasar } from 'quasar'
+import { useRouter } from 'vue-router'
 
 import type { LoginCredentials } from '../types'
 
+import { VEHICLE_LIST } from '@/shared/constants/routeNames'
 import { checkRequired, checkEmail, checkPassword } from '@/shared/utils/form'
 
 import { useAuthStore } from '../store'
@@ -12,16 +15,32 @@ interface SignupForm extends LoginCredentials {
 }
 
 const store = useAuthStore()
+const router = useRouter()
+const q = useQuasar()
 const form = ref<SignupForm>({
   email: '',
   password: '',
   confirm: ''
 })
 
-function handleRegister() {
-  const { email, password } = form.value
-  const credentials: LoginCredentials = { email, password }
-  store.signup(credentials)
+async function handleRegister() {
+  try {
+    const { email, password } = form.value
+    const credentials: LoginCredentials = { email, password }
+    await store.signup(credentials)
+
+    q.notify({
+      type: 'positive',
+      message: 'Cuenta creada exitosamente'
+    })
+
+    router.push({ name: VEHICLE_LIST })
+  } catch (_) {
+    q.notify({
+      type: 'negative',
+      message: 'Error al crear la cuenta'
+    })
+  }
 }
 </script>
 
@@ -29,8 +48,9 @@ function handleRegister() {
   <q-form class="column" @submit="handleRegister">
     <q-input
       placeholder="Correo"
-      v-model="form.email"
       bg-color="secondary"
+      v-model="form.email"
+      :disable="store.loading"
       :rules="[checkRequired, checkEmail]"
       lazy-rules
       standout
@@ -39,8 +59,9 @@ function handleRegister() {
     <q-input
       type="password"
       placeholder="Contraseña"
-      v-model="form.password"
       bg-color="secondary"
+      v-model="form.password"
+      :disable="store.loading"
       :rules="[checkRequired]"
       standout
       dense
@@ -48,20 +69,15 @@ function handleRegister() {
     <q-input
       type="password"
       placeholder="Confirma Contraseña"
-      v-model="form.password"
       bg-color="secondary"
+      v-model="form.confirm"
+      :disable="store.loading"
       :rules="[checkRequired, checkPassword(form.password)]"
       standout
       dense
     />
     <div class="row justify-center q-gutter-md">
       <q-btn type="submit" label="Registrar" color="primary" />
-      <!-- <q-btn
-        label="Registro"
-        color="secondary"
-        @click="router.push({ name: AUTH_SIGNUP })"
-        outline
-      /> -->
     </div>
   </q-form>
 </template>

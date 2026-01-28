@@ -13,26 +13,40 @@ export const useAuthStore = defineStore('auth', () => {
 
   const isAuthenticated = computed(() => !!token.value)
 
-  async function signup(credentials: LoginCredentials) {
+  async function handleAuth(
+    action: (c: LoginCredentials) => Promise<{ user: User; token: string }>,
+    credentials: LoginCredentials
+  ) {
     loading.value = true
-    const response = await register(credentials)
-    user.value = response
-    token.value = ''
-    loading.value = false
+    error.value = null
+    try {
+      const response = await action(credentials)
+      user.value = response.user
+      token.value = response.token
+
+      localStorage.setItem('user-token', response.token)
+      localStorage.setItem('user-data', JSON.stringify(response.user))
+    } catch (err: any) {
+      error.value = err.response?.data?.message
+      throw err
+    } finally {
+      loading.value = false
+    }
+  }
+
+  async function signup(credentials: LoginCredentials) {
+    await handleAuth(register, credentials)
   }
 
   async function login(credentials: LoginCredentials) {
-    loading.value = true
-    const response = await authenticate(credentials)
-    user.value = response
-    token.value = ''
-    loading.value = false
+    await handleAuth(authenticate, credentials)
   }
 
   function logout() {
     user.value = null
     token.value = null
     localStorage.removeItem('user-token')
+    localStorage.removeItem('user-data')
   }
 
   return {

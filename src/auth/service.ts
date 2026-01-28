@@ -1,11 +1,13 @@
-import type { LoginCredentials, User } from './types'
+import type { LoginCredentials, LoginResponse } from './types'
 
-import { USER } from '@/shared/mocks/mocks'
+import api from '@/shared/services/api'
 
-export async function authenticate(_credentials: LoginCredentials): Promise<User> {
-  return Promise.resolve(USER)
+export async function authenticate(credentials: LoginCredentials): Promise<LoginResponse> {
+  const { data } = await api.post<LoginResponse>('/auth/login', credentials)
+  return data
 }
 
-export async function register(_credentials: LoginCredentials): Promise<User> {
-  return Promise.resolve(USER)
+export async function register(credentials: LoginCredentials): Promise<any> {
+  const { data } = await api.post<any>('/auth/register', credentials)
+  return data
 }
