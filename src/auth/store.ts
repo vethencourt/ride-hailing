@@ -6,8 +6,8 @@ import type { LoginCredentials, User } from './types'
 import { authenticate, register } from './service'
 
 export const useAuthStore = defineStore('auth', () => {
-  const user = ref<User | null>(null)
-  const token = ref<string | null>(null)
+  const user = ref<User | null>(JSON.parse(localStorage.getItem('user-data') || 'null'))
+  const token = ref<string | null>(localStorage.getItem('user-token'))
   const loading = ref(false)
   const error = ref<string | null>(null)
 
