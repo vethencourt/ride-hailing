@@ -72,6 +72,8 @@ const rows = computed(() =>
 
 async function handleRequest(requestProps: any) {
   const { page, rowsPerPage, sortBy, descending } = requestProps.pagination
+  pagination.value.page = page
+  pagination.value.rowsPerPage = rowsPerPage
   pagination.value.sortBy = sortBy
   pagination.value.descending = descending
 
@@ -89,10 +91,7 @@ async function handleRequest(requestProps: any) {
 }
 
 onMounted(() => {
-  handleRequest({
-    pagination: pagination.value,
-    filter: props.filter
-  })
+  handleRequest({ pagination: pagination.value })
 })
 </script>
 
@@ -102,12 +101,12 @@ onMounted(() => {
     separator="horizontal"
     row-key="id"
     no-data-label="No se encontaron vehiculos"
-    :rows
-    :columns
+    :rows="rows"
+    :columns="columns"
     :visible-columns="visibleColumns"
-    :filter="props.filter"
-    :pagination
+    :filter="filter"
     :rows-per-page-options="[5, 10, 25, 50, 100]"
+    v-model:pagination="pagination"
     @request="handleRequest"
     binary-state-sort
     flat
