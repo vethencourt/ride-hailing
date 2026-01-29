@@ -1,48 +1,55 @@
-# ride-hailing
+# Ride Hailing - Frontend
 
-This template should help get you started developing with Vue 3 in Vite.
+## Prerrequisitos
 
-## Recommended IDE Setup
+- [Node.js](https://nodejs.org/) (v24)
+- [pnpm](https://www.pnpm.io/)
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+## Instalación
 
-## Recommended Browser Setup
-
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
-
-## Type Support for `.vue` Imports in TS
-
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vite.dev/config/).
-
-## Project Setup
+1. **Clonar el repositorio**
 
 ```sh
-npm install
+git clone <url-del-repositorio>
+cd ride-hailing
 ```
 
-### Compile and Hot-Reload for Development
+2. **Instalar dependencias**
 
 ```sh
-npm run dev
+pnpm i
 ```
 
-### Type-Check, Compile and Minify for Production
+3. **Configurar entorno** Crea un archivo .env en el directorio raíz basado en .env.example
 
 ```sh
-npm run build
+cp .env.example .env.local
 ```
 
-### Lint with [ESLint](https://eslint.org/)
+## Desarrollo
+
+### Ejecutar en modo desarrollo
+
+tsx se encarga de auto recargar.
 
 ```sh
-npm run lint
+pnpm run dev
+```
+
+### Compilar para producción
+
+```sh
+pnpm run build
+```
+
+### Limpiador y formateador
+
+Al instalar las extensiones de VSC recomendadas, el limpiador y el formateador se ejecutarán automáticamente después de guardar el archivo. Tambien se pueden ejecutar de manera manual sobre todo el proyecto
+
+```sh
+pnpm run lint
+```
+
+```sh
+pnpm run format
 ```
