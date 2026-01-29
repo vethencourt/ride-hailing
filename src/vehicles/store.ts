@@ -3,6 +3,7 @@ import { defineStore } from 'pinia'
 
 import type { CreateVehicle, Vehicle, VehicleListRequest, VehicleStatus } from './types'
 
+import { useAuthStore } from '@/auth/store'
 import { ITEMS_PER_PAGE } from '@/shared/constants/numbers'
 import { formatDate } from '@/shared/utils/date'
 
@@ -13,6 +14,8 @@ import {
 } from './service'
 
 export const useVehicleStore = defineStore('vehicles', () => {
+  const authStore = useAuthStore()
+
   const vehicles = ref<Vehicle[]>([])
   const isLoading = ref(false)
   const isStatusLoading = ref(false)
@@ -61,7 +64,9 @@ export const useVehicleStore = defineStore('vehicles', () => {
       const response = await createVehicleService(vehicleForm)
       const newVehicle: Vehicle = {
         ...response,
-        createdBy: formatDate(response.createdAt),
+        createdBy: authStore.user!,
+        updatedBy: authStore.user!,
+        createdAt: formatDate(response.createdAt),
         updatedAt: formatDate(response.updatedAt)
       }
       vehicles.value.unshift(newVehicle)

@@ -7,6 +7,7 @@ import type { LoginCredentials } from '../types'
 
 import { VEHICLE_LIST } from '@/shared/constants/routeNames'
 import { checkRequired, checkEmail, checkPassword } from '@/shared/utils/form'
+import { qNotify } from '@/shared/utils/notify'
 
 import { useAuthStore } from '../store'
 
@@ -28,18 +29,10 @@ async function handleRegister() {
     const { email, password } = form.value
     const credentials: LoginCredentials = { email, password }
     await store.signup(credentials)
-
-    q.notify({
-      type: 'positive',
-      message: 'Cuenta creada exitosamente'
-    })
-
+    qNotify(q, 'positive', 'Cuenta creada exitosamente')
     router.push({ name: VEHICLE_LIST })
   } catch (_) {
-    q.notify({
-      type: 'negative',
-      message: 'Error al crear la cuenta'
-    })
+    qNotify(q, 'negative', 'Error al crear la cuenta')
   }
 }
 </script>
