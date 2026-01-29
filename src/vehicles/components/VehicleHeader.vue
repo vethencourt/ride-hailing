@@ -36,6 +36,7 @@ function handleButtonClick() {
         <q-input
           class="full-width"
           placeholder="Buscar"
+          bg-color="secondary"
           :model-value="props.modelValue"
           @update:model-value="(v) => emits('update:modelValue', v as string)"
           :debounce="DEBOUNCE_DELAY"

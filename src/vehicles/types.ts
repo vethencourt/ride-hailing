@@ -24,7 +24,7 @@ export interface VehicleListResponse {
   pagination: PaginationResponse
 }
 
-export type VehicleStatus = 'AVAILABLE' | 'MAINTENANCE' | 'SERVICING'
+export type VehicleStatus = 'DISPONIBLE' | 'MANTENIMIENTO' | 'SERVICIO'
 
 export interface Pagination {
   page: number

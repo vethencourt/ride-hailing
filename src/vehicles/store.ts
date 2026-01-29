@@ -78,7 +78,7 @@ export const useVehicleStore = defineStore('vehicles', () => {
     }
   }
 
-  async function changeVehicleStatus(id: string, status: VehicleStatus) {
+  async function changeVehicleStatus(status: VehicleStatus, id: string) {
     isStatusLoading.value = true
     error.value = null
 

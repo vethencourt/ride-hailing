@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import type { VehicleStatus } from '@/vehicles/types'
 
-import { getStatusText } from '@/vehicles/utils'
-
 defineProps<{
   status: VehicleStatus
   clickable?: boolean
@@ -13,9 +11,9 @@ const emits = defineEmits<{
 }>()
 
 function statusClass(s: VehicleStatus): string {
-  return s === 'AVAILABLE'
+  return s === 'DISPONIBLE'
     ? 'status-available'
-    : s === 'MAINTENANCE'
+    : s === 'MANTENIMIENTO'
       ? 'status-maintenance'
       : 'status-servicing'
 }
@@ -27,7 +25,7 @@ function statusClass(s: VehicleStatus): string {
     :class="[statusClass(status), { 'cursor-pointer': clickable }]"
     @click="() => emits('click')"
   >
-    {{ getStatusText(status) }}
+    {{ status.toLowerCase() }}
   </q-badge>
 </template>
 

@@ -16,6 +16,6 @@ export async function updateVehicle(
   vehicle: Partial<CreateVehicle>,
   id: string
 ): Promise<Vehicle> {
-  const response = await api.post<Vehicle>(`/vehicles/${id}`, vehicle)
+  const response = await api.put<Vehicle>(`/vehicles/${id}`, vehicle)
   return response as unknown as Vehicle
 }

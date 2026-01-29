@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import { onMounted, computed } from 'vue'
 import { storeToRefs } from 'pinia'
+import { useQuasar, type QTableProps } from 'quasar'
 
-import type { Vehicle, VehicleListRequest } from '../types'
-import type { QTableProps } from 'quasar'
+import type { VehicleListRequest, VehicleStatus } from '../types'
 
+import { qNotify } from '@/shared/utils/notify'
 import { useVehicleStore } from '@/vehicles/store'
 
 import StatusSelect from './StatusSelect.vue'
-import { getStatusText } from '../utils'
 
 // define a prop to receive the search term
 const props = defineProps<{
@@ -16,6 +16,7 @@ const props = defineProps<{
 }>()
 
 const store = useVehicleStore()
+const q = useQuasar()
 // TODO: use isLoading
 const { vehicles, /*isLoading,*/ pagination } = storeToRefs(store)
 
@@ -66,10 +67,6 @@ const columns = computed<QTableProps['columns']>(() => [
   }
 ])
 
-const rows = computed(() =>
-  vehicles.value.map((v: Vehicle) => ({ ...v, statusText: getStatusText(v.status) }))
-)
-
 async function handleRequest(requestProps: any) {
   const { page, rowsPerPage, sortBy, descending } = requestProps.pagination
   pagination.value.page = page
@@ -87,7 +84,20 @@ async function handleRequest(requestProps: any) {
     sortOrder: descending ? '-1' : '1'
   }
 
-  await store.getVehicles(requestBody)
+  try {
+    await store.getVehicles(requestBody)
+  } catch (_) {
+    qNotify(q, 'negative', 'Error al obtener los vehículos')
+  }
+}
+
+async function handleStatusChange(vehicleId: string, status: VehicleStatus) {
+  try {
+    await store.changeVehicleStatus(status, vehicleId)
+    qNotify(q, 'positive', 'Estado del vehículo actualizado correctamente')
+  } catch (_) {
+    qNotify(q, 'negative', 'Error al actualizar el estado del vehículo')
+  }
 }
 
 onMounted(() => {
@@ -101,7 +111,7 @@ onMounted(() => {
     separator="horizontal"
     row-key="id"
     no-data-label="No se encontaron vehiculos"
-    :rows="rows"
+    :rows="vehicles"
     :columns="columns"
     :visible-columns="visibleColumns"
     :filter="filter"
@@ -135,7 +145,7 @@ onMounted(() => {
       <q-td :props="props" class="status-td">
         <StatusSelect
           :value="props.row.status"
-          @onStatusChange="(val) => store.changeVehicleStatus(props.row.id, val)"
+          @onStatusChange="(val) => handleStatusChange(props.row.id, val)"
         />
       </q-td>
     </template>
