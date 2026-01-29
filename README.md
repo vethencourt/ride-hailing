@@ -30,8 +30,6 @@ cp .env.example .env.local
 
 ### Ejecutar en modo desarrollo
 
-tsx se encarga de auto recargar.
-
 ```sh
 pnpm run dev
 ```
