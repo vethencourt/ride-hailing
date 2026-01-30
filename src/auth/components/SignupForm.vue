@@ -38,7 +38,7 @@ async function handleRegister() {
 </script>
 
 <template>
-  <q-form class="column" @submit="handleRegister">
+  <q-form class="column" @submit.prevent="handleRegister">
     <q-input
       placeholder="Correo"
       bg-color="secondary"

@@ -31,7 +31,7 @@ async function handleLogin() {
 </script>
 
 <template>
-  <q-form class="column" @submit="handleLogin">
+  <q-form class="column" @submit.prevent="handleLogin">
     <q-input
       placeholder="Correo"
       bg-color="secondary"
@@ -60,6 +60,7 @@ async function handleLogin() {
         :disable="store.loading"
         @click="router.push({ name: AUTH_SIGNUP })"
         outline
+        type="button"
       />
     </div>
   </q-form>

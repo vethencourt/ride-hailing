@@ -100,7 +100,7 @@ async function handleSubmit() {
 </script>
 
 <template>
-  <q-form class="column" @submit="handleSubmit">
+  <q-form class="column" @submit.prevent="handleSubmit">
     <q-select
       v-model="form.make"
       label="Marca"
@@ -135,7 +135,7 @@ async function handleSubmit() {
     />
     <div class="row justify-center q-gutter-md">
       <q-btn type="submit" label="Crear" color="primary" />
-      <q-btn label="Cancelar" color="accent" @click="handleCancel" outline />
+      <q-btn type="button" label="Cancelar" color="accent" @click="handleCancel" outline />
     </div>
   </q-form>
 </template>
