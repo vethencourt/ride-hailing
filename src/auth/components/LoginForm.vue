@@ -20,11 +20,15 @@ const form = ref<LoginCredentials>({
 })
 
 async function handleLogin() {
+  console.log('1. clicked button')
   try {
+    console.log('2. calling...')
     await store.login(form.value)
     qNotify(q, 'positive', 'Bienvenido a Ride Hailing')
     router.push({ name: VEHICLE_LIST })
-  } catch (_) {
+    console.log('3 all good')
+  } catch (err) {
+    console.log('3 bad shit', err)
     qNotify(q, 'negative', 'Error al iniciar sesión')
   }
 }
