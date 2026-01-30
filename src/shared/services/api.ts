@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-import { useAuthStore } from '@/auth/store'
+// import { useAuthStore } from '@/auth/store'
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL,
@@ -11,10 +11,10 @@ const api = axios.create({
 
 // request interceptor adds JWT
 api.interceptors.request.use((config) => {
-  const authStore = useAuthStore()
-  if (authStore.token) {
-    config.headers.Authorization = `Bearer ${authStore.token}`
-  }
+  // const authStore = useAuthStore()
+  // if (authStore.token) {
+  //   config.headers.Authorization = `Bearer ${authStore.token}`
+  // }
   return config
 })
 
