@@ -22,6 +22,7 @@ api.interceptors.request.use((config) => {
 api.interceptors.response.use(
   (response) => response.data,
   (error) => {
+    console.log('API error:', error)
     const message = error.response?.data?.message || 'Something went wrong'
     return Promise.reject(new Error(message))
   }
