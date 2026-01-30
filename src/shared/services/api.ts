@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-// import { useAuthStore } from '@/auth/store'
+import { useAuthStore } from '@/auth/store'
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL,
@@ -11,10 +11,10 @@ const api = axios.create({
 
 // request interceptor adds JWT
 api.interceptors.request.use((config) => {
-  // const authStore = useAuthStore()
-  // if (authStore.token) {
-  //   config.headers.Authorization = `Bearer ${authStore.token}`
-  // }
+  const authStore = useAuthStore()
+  if (authStore.token) {
+    config.headers.Authorization = `Bearer ${authStore.token}`
+  }
   return config
 })
 
@@ -23,8 +23,7 @@ api.interceptors.response.use(
   (response) => response.data,
   (error) => {
     console.log('API error:', error)
-    const message = error.response?.data?.message || 'Something went wrong'
-    return Promise.reject(new Error(message))
+    return Promise.reject(error)
   }
 )
 
